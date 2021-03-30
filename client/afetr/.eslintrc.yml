@@ -1,0 +1,33 @@
+---
+parser: babel-eslint
+env:
+  browser: true
+  commonjs: true
+  es6: true
+  node: true
+settings:
+  react:
+    version: detect
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:jsx-a11y/recommended
+  - plugin:prettier/recommended
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:sonarjs/recommended
+  - plugin:promise/recommended
+plugins:
+  - react
+  - jsx-a11y
+  - sonarjs
+  - no-loops
+  - promise
+rules:
+  jsx-a11y/no-autofocus: 'off'
+  react/display-name: 'off'
