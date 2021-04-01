@@ -4,7 +4,7 @@ import React from 'react'
 const Dashboard = ()=>{
     return (
         <div>
-            Dashboard
+            <h1 className="size">Dashboards</h1>
         </div>
     )
 }

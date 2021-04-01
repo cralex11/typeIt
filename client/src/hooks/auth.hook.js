@@ -5,8 +5,9 @@ export const useAuth = () => {
 
     const [token, setToken] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const login = useCallback((jwtToken, id) => {
+    const login = useCallback((jwtToken, id, remember = false) => {
         setToken(jwtToken)
         setUserId(id)
         localStorage.setItem(storageName, JSON.stringify({
@@ -24,9 +25,9 @@ export const useAuth = () => {
         const data = JSON.parse(localStorage.getItem(storageName))
 
         if (data && data.token)
-            console.log(data)
             login(data.token, data.userId)
+        setLoading(false)
     }, [login])
 
-    return {login, logout, token, userId}
+    return {login, logout, token, userId, loading}
 }

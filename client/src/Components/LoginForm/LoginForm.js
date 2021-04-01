@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '../Button';
 
-const LoginForm = ({changeHandler, submitHandler, loading}) => {
+const LoginForm = ({changeHandler, submitHandler, setIsChecked, loading}) => {
+    const [checkboxValue, setCheckboxValue] = useState(false);
     const submit = (type) => submitHandler(type);
+
+    useEffect(() => {
+        setIsChecked(checkboxValue)
+    }, [checkboxValue, setIsChecked])
+
+    const checkboxHandle = (e) => {
+        setCheckboxValue(!checkboxValue)
+    }
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div
+            className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 dark:text-white py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <img
@@ -13,12 +23,7 @@ const LoginForm = ({changeHandler, submitHandler, loading}) => {
                         alt="Workflow"
                     />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        Or
-                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                            start your 14-day free trial
-                        </a>
-                    </p>
+
                 </div>
                 <form className="mt-8 space-y-6" action="#" method="POST">
                     <input type="hidden" name="remember" value="true" />
@@ -58,6 +63,9 @@ const LoginForm = ({changeHandler, submitHandler, loading}) => {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
                             <input
+                                onChange={checkboxHandle}
+                                checked={checkboxValue}
+                                value={checkboxValue}
                                 id="remember_me"
                                 name="remember_me"
                                 type="checkbox"
@@ -69,7 +77,7 @@ const LoginForm = ({changeHandler, submitHandler, loading}) => {
                         </div>
 
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                            <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Forgot your password?
                             </a>
                         </div>
