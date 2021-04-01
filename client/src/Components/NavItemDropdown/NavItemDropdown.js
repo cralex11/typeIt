@@ -1,12 +1,7 @@
-import React from 'react'
-
+import React from "react";
 
 const NavItemDropdown = () => {
-    return (
-        <div>
+  return <div></div>;
+};
 
-        </div>
-    )
-}
-
-export default NavItemDropdown
+export default NavItemDropdown;
