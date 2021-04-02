@@ -2,9 +2,27 @@ import { useEffect, useState } from "react";
 import Button from "../Button";
 
 const LoginForm = ({ changeHandler, submitHandler, setIsChecked, loading }) => {
+  const [localLoading, setLocalLoading] = useState(loading);
   const [checkboxValue, setCheckboxValue] = useState(false);
-  const submit = (type) => submitHandler(type);
+  const submit = (e, type) => {
+    setLocalLoading(true);
+    e.preventDefault();
+    submitHandler(type);
+  };
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setLocalLoading(false);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [localLoading]);
+
+  useEffect(() => {
+    setLocalLoading(loading);
+  }, [loading]);
   useEffect(() => {
     setIsChecked(checkboxValue);
   }, [checkboxValue, setIsChecked]);
@@ -92,15 +110,15 @@ const LoginForm = ({ changeHandler, submitHandler, setIsChecked, loading }) => {
           <div className="flex justify-between">
             <Button
               title="Register"
-              disabled={loading}
-              onClick={() => submit("register")}
+              disabled={localLoading}
+              onClick={(e) => submit(e, "register")}
               type="submit"
               className="group relative w-6/12 flex justify-center mr-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             />
             <Button
               title="Sign In"
-              disabled={loading}
-              onClick={() => submit("login")}
+              disabled={localLoading}
+              onClick={(e) => submit(e, "login")}
               type="submit"
               className="group w-6/12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             />

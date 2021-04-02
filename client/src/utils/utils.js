@@ -19,3 +19,5 @@ export const notify = (msg, type = "info", title = null, config = {}) => {
       config
     );
 };
+
+export const errNotify = (e) => notify(e.response.data.message, "warning");

@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import LoginForm from "../Components/LoginForm";
 import { useHttp } from "../hooks/http.hook";
-import { notify } from "../utils/utils";
+import { errNotify, notify } from "../utils/utils";
 import { AuthContext } from "../context/AuthContext";
+import api from "../utils/appApi";
 
 const AuthPage = () => {
   const auth = useContext(AuthContext);
@@ -23,12 +24,17 @@ const AuthPage = () => {
   };
   const submitHandler = async (type) => {
     try {
-      //todo add functionality to remember user
-      const data = await request(`/api/auth/${type}`, "POST", { ...form });
-      if (type === "login") auth.login(data.token, data.userId);
-      notify(data.message);
+      console.log(type);
+      // let pass = false;
+      let res;
+      if (type === "login")
+        res = await api.auth.login(form).catch((e) => errNotify(e));
+      if (type === "register")
+        res = await api.auth.register(form).catch((e) => errNotify(e));
+      if (res.message) notify(res.message);
+      if (res.data) auth.login(res.data.token, res.data.userId);
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   };
 
