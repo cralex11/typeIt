@@ -4,6 +4,7 @@ import { useRoutes } from "./routes";
 import { notifyInit } from "./utils/utils";
 import { useAuth } from "./hooks/auth.hook";
 import { AuthContext } from "./context/AuthContext";
+import axiosInstance from "./utils/apiConfig";
 
 const App = () => {
   const { logout, login, token, userId, loading } = useAuth();
@@ -11,6 +12,7 @@ const App = () => {
 
   useEffect(() => {
     notifyInit();
+    axiosInstance.post("/").then((res) => console.log(res.data));
   }, []);
   const routes = useRoutes(isAuthenticated);
 
