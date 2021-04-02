@@ -24,7 +24,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://typeit1.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",
