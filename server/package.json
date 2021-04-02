@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "chat",
   "main": "index.js",
+  "engines": {
+    "node": "15.12",
+    "npm": "7.6.3"
+  },
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js",
@@ -16,6 +20,7 @@
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "jsonwebtoken": "^8.5.1",
