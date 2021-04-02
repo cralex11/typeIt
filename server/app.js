@@ -26,7 +26,7 @@ async function start() {
 start().then(() => console.log("db started"));
 //--------------------------
 //test
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("good");
 });
 
