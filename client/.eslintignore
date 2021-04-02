@@ -1,4 +1,4 @@
-build/
+build/*
 public/
 package.json
 package-lock.json
