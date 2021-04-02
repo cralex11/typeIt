@@ -1,5 +1,3 @@
-import React from "react";
-
 const Spinner = ({ loading = true }) => {
   if (!loading) return;
   return (

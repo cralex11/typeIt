@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoginForm from "../Components/LoginForm";
 import { useHttp } from "../hooks/http.hook";
 import { notify } from "../utils/utils";
@@ -27,7 +27,9 @@ const AuthPage = () => {
       const data = await request(`/api/auth/${type}`, "POST", { ...form });
       if (type === "login") auth.login(data.token, data.userId);
       notify(data.message);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const checkboxHandle = (e) => {

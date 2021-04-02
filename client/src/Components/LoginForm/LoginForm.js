@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button";
 
 const LoginForm = ({ changeHandler, submitHandler, setIsChecked, loading }) => {

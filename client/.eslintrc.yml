@@ -1,36 +1,54 @@
 ---
-parser: babel-eslint
 env:
   browser: true
   commonjs: true
-  es6: true
-  node: true
+
 settings:
   react:
     version: detect
+
 parserOptions:
-  ecmaVersion: 2018
+  ecmaVersion: 12
   sourceType: module
   ecmaFeatures:
     jsx: true
+
 extends:
   - eslint:recommended
   - plugin:react/recommended
   - plugin:jsx-a11y/recommended
   - prettier
   - plugin:prettier/recommended
-  - plugin:import/errors
-  - plugin:import/warnings
   - plugin:sonarjs/recommended
   - plugin:promise/recommended
+  - plugin:react-hooks/recommended
+  - plugin:import/errors
+  - plugin:import/warnings
 plugins:
   - react
   - jsx-a11y
   - sonarjs
   - no-loops
   - promise
+  - react-hooks
+  - import
 rules:
   jsx-a11y/no-autofocus: 'off'
   react/display-name: 'off'
+  #  turn off react import for jsx
   react/jsx-uses-react: 'off'
   react/react-in-jsx-scope: 'off'
+
+# Important to add this to show errors as warnings in console
+# ESLINT_NO_DEV_ERRORS=true to .env
+# Dev dependencies
+#    "eslint": "^7.23.0",
+#    "eslint-config-prettier": "^8.1.0",
+#    "eslint-plugin-import": "^2.22.1",
+#    "eslint-plugin-jsx-a11y": "^6.4.1",
+#    "eslint-plugin-no-loops": "^0.3.0",
+#    "eslint-plugin-prettier": "^3.3.1",
+#    "eslint-plugin-promise": "^4.3.1",
+#    "eslint-plugin-react": "^7.23.1",
+#    "eslint-plugin-react-hooks": "^4.2.0",
+#    "eslint-plugin-sonarjs": "^0.6.0",
