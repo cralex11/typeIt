@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js",
+    "server": "nodemon -L app.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -27,6 +27,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.12.2",
     "postcss": "^8.2.8",
+    "socket.io": "^4.0.1",
     "tailwindcss": "^2.0.4"
   },
   "devDependencies": {

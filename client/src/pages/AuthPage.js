@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import LoginForm from "../Components/LoginForm";
 import { useHttp } from "../hooks/http.hook";
-import { errNotify, notify } from "../utils/utils";
+import { errNotify, isLoggedIn, notify } from "../utils/utils";
 import { AuthContext } from "../context/AuthContext";
 import api from "../utils/appApi";
+import { Redirect } from "react-router-dom";
 
 const AuthPage = () => {
   const auth = useContext(AuthContext);
@@ -43,7 +44,9 @@ const AuthPage = () => {
     console.log(target.value);
   };
 
-  return (
+  return isLoggedIn ? (
+    <Redirect to="/app" />
+  ) : (
     <LoginForm
       changeHandler={changeHandler}
       submitHandler={submitHandler}
