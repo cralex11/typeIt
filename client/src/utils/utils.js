@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const isLoggedIn = true;
+export const isLoggedIn = false;
 export const notifyInit = () =>
   toast.configure({
     delay: 300,

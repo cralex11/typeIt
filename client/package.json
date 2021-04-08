@@ -54,7 +54,7 @@
     "eslint-plugin-sonarjs": "^0.6.0",
     "postcss": "^8.2.9",
     "postcss-cli": "^8.3.1",
-    "prettier": "^2.2.1",
+    "prettier": "2.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
   }
 }

@@ -9,4 +9,8 @@ const axiosInstance = axios.create({
   },
 });
 
+const tokenCheckInterceptor = (config) => {
+  config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+};
+
 export default axiosInstance;

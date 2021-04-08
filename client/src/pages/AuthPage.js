@@ -5,9 +5,12 @@ import { errNotify, isLoggedIn, notify } from "../utils/utils";
 import { AuthContext } from "../context/AuthContext";
 import api from "../utils/appApi";
 import { Redirect } from "react-router-dom";
+import { userRegister } from "../store/actions/userAction";
+import { useDispatch } from "react-redux";
 
 const AuthPage = () => {
   const auth = useContext(AuthContext);
+  const dispatch = useDispatch();
   const { loading, error, request, clearError } = useHttp();
   const [isChecked, setIsChecked] = useState(false);
   const [form, setForm] = useState({
@@ -30,8 +33,9 @@ const AuthPage = () => {
       let res;
       if (type === "login")
         res = await api.auth.login(form).catch((e) => errNotify(e));
-      if (type === "register")
-        res = await api.auth.register(form).catch((e) => errNotify(e));
+      if (type === "register") dispatch(userRegister(form));
+      console.log("here");
+      // res = await api.auth.register(form).catch((e) => errNotify(e));
       if (res.message) notify(res.message);
       if (res.data) auth.login(res.data.token, res.data.userId);
     } catch (e) {
