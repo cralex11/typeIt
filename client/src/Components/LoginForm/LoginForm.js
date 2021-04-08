@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import Button from "../Button";
 
-const LoginForm = ({ changeHandler, submitHandler, setIsChecked, loading }) => {
+const LoginForm = ({
+  changeHandler,
+  submitHandler,
+  setIsChecked,
+  loading = false,
+}) => {
   const [localLoading, setLocalLoading] = useState(loading);
   const [checkboxValue, setCheckboxValue] = useState(false);
   const submit = (e, type) => {

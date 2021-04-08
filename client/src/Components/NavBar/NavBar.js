@@ -2,19 +2,20 @@ import { useContext, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Link from "../Link";
 import Button from "../Button";
-import { AuthContext } from "../../context/AuthContext";
 import { navIcons } from "../../router/config/links";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/actions/userAction";
 
 const NavBar = (props) => {
   const { routes, prefix } = props;
+  const dispatch = useDispatch();
   const history = useHistory();
   const [hamburger, setHamburger] = useState(false);
-  const auth = useContext(AuthContext);
   const handleHamburger = () => setHamburger(!hamburger);
   const handleLogout = () => {
-    auth.logout();
-    history.push("/");
+    dispatch(logout());
+    // history.push("/");
   };
 
   return (

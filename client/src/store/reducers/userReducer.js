@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, GET_USER } from "../actionTypes";
+import { LOGIN, LOGOUT, GET_USER, SET_TO_AUTHORIZED } from "../actionTypes";
 
 const initialState = {
   isAuthorized: false,
@@ -21,12 +21,13 @@ const user = (state = initialState, action = {}) => {
       };
     case LOGOUT:
       return initialState;
-    case GET_USER:
+    case SET_TO_AUTHORIZED:
       return {
         ...state,
+        isAuthorized: true,
         data: {
-          ...state.data,
-          ...action.payload,
+          id: action.payload.id,
+          role: action.payload.role,
         },
       };
     default:

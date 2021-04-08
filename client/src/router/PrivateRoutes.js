@@ -1,16 +1,17 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Redirect, useRouteMatch } from "react-router-dom";
-import { getAllowedRoutes, isLoggedIn /*, isLoggedIn*/ } from "../utils/utils";
+import { getAllowedRoutes } from "../utils/utils";
 import { privateRotes as PrivateRoutesConfig } from "./config/privateRoutesConfig";
-// import { TopNav } from "components/common";
 import MapAllowedRoutes from "./MapAllowedRoutes";
 import NavBar from "../Components/NavBar";
+import { useSelector } from "react-redux";
 
 function PrivateRoutes() {
   const match = useRouteMatch("/app");
   let allowedRoutes = [];
+  const isAuth = useSelector((store) => store.user.isAuthorized);
 
-  if (/*isLoggedIn()*/ isLoggedIn) {
+  if (isAuth) {
     allowedRoutes = getAllowedRoutes(PrivateRoutesConfig);
   } else {
     return <Redirect to="/" />;

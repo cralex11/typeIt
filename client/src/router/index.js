@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import history from "../utils/history";
 import PrivateRoutes from "./PrivateRoutes";

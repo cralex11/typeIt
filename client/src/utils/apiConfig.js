@@ -11,6 +11,9 @@ const axiosInstance = axios.create({
 
 const tokenCheckInterceptor = (config) => {
   config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+  return config;
 };
+
+axiosInstance.interceptors.request.use(tokenCheckInterceptor);
 
 export default axiosInstance;
