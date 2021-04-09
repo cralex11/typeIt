@@ -5,6 +5,7 @@ import { privateRotes as PrivateRoutesConfig } from "./config/privateRoutesConfi
 import MapAllowedRoutes from "./MapAllowedRoutes";
 import NavBar from "../Components/NavBar";
 import { useSelector } from "react-redux";
+import Dashboard from "../pages/Dashboard";
 
 function PrivateRoutes() {
   const match = useRouteMatch("/app");
@@ -16,11 +17,13 @@ function PrivateRoutes() {
   } else {
     return <Redirect to="/" />;
   }
+  console.log(allowedRoutes);
 
   return (
     <Fragment>
       <NavBar routes={allowedRoutes} prefix={match.path} />
-      <MapAllowedRoutes routes={allowedRoutes} basePath="/app" isAddNotFound />
+      <Dashboard routes={allowedRoutes} basePath="/app" isAddNotFound />
+      {/*<MapAllowedRoutes routes={allowedRoutes} basePath="/app" isAddNotFound />*/}
     </Fragment>
   );
 }
