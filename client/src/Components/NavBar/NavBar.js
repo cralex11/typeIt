@@ -1,34 +1,37 @@
 import { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import Link from "../Link";
 import Button from "../Button";
-import { AuthContext } from "../../context/AuthContext";
-import { links } from "../../utils/links";
+import { navIcons } from "../../router/config/links";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/actions/userAction";
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const { routes, prefix } = props;
+  const dispatch = useDispatch();
   const history = useHistory();
   const [hamburger, setHamburger] = useState(false);
-  const auth = useContext(AuthContext);
   const handleHamburger = () => setHamburger(!hamburger);
   const handleLogout = () => {
-    auth.logout();
-    history.push("/");
+    dispatch(logout());
+    // history.push("/");
   };
 
   return (
     <div>
-      <div className="font-display relative bg-white">
+      <div className="font-display relative bg-white w-1 m-0 p-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="/">
+              <Link to="/">
                 <span className="sr-only">Workflow</span>
                 <img
                   className="h-8 w-auto sm:h-10"
                   src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                   alt=""
                 />
-              </a>
+              </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <button
@@ -57,14 +60,18 @@ const NavBar = () => {
             </div>
             {/*Navbar Links*/}
             <nav className="hidden md:flex space-x-10">
-              {links.map((link, i) => (
-                <Link
-                  key={i}
-                  className="text-base font-medium text-gray-500 hover:text-gray-900 transition-colors duration-300"
-                >
-                  {link.title}
-                </Link>
-              ))}
+              {routes.map(({ path, title = null }) => {
+                if (title)
+                  return (
+                    <Link
+                      key={path}
+                      className="text-base font-medium text-gray-500 hover:text-gray-900 transition-colors duration-300"
+                      to={`${prefix}${path}`}
+                    >
+                      {title}
+                    </Link>
+                  );
+              })}
             </nav>
 
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
@@ -120,15 +127,19 @@ const NavBar = () => {
               </div>
               <div className="mt-6">
                 <nav className="grid gap-y-8">
-                  {links.map((link, i) => (
-                    <Link
-                      key={i}
-                      className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 text-base font-medium text-gray-900"
-                      icon={link.icon || ""}
-                    >
-                      {link.title}
-                    </Link>
-                  ))}
+                  {routes.map(({ path, title, icon }) => {
+                    if (title)
+                      return (
+                        <Link
+                          key={path}
+                          to={`${prefix}${path}`}
+                          className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 text-base font-medium text-gray-900"
+                          icon={icon}
+                        >
+                          {title}
+                        </Link>
+                      );
+                  })}
                 </nav>
               </div>
             </div>
@@ -147,6 +158,11 @@ const NavBar = () => {
       </div>
     </div>
   );
+};
+
+NavBar.propTypes = {
+  routes: PropTypes.arrayOf(PropTypes.object),
+  path: PropTypes.string,
 };
 
 export default NavBar;

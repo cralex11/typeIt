@@ -9,14 +9,13 @@
   },
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js",
+    "server": "nodemon -L app.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Alexandru Cristea",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.2.5",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "cors": "^2.8.5",
@@ -24,10 +23,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "jsonwebtoken": "^8.5.1",
-    "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.12.2",
-    "postcss": "^8.2.8",
-    "tailwindcss": "^2.0.4"
+    "socket.io": "^4.0.1"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",

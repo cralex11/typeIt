@@ -1,34 +1,30 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import LoginForm from "../Components/LoginForm";
-import { useHttp } from "../hooks/http.hook";
-import { notify } from "../utils/utils";
-import { AuthContext } from "../context/AuthContext";
+import { Redirect } from "react-router-dom";
+import { userLogin, userRegister } from "../store/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const AuthPage = () => {
-  const auth = useContext(AuthContext);
-  const { loading, error, request, clearError } = useHttp();
+  const dispatch = useDispatch();
+  const [disable, setDisable] = useState(false);
+  const isAuth = useSelector((store) => store.user.isAuthorized);
   const [isChecked, setIsChecked] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  useEffect(() => {
-    if (error) {
-      notify(error.message || error, "error", "Error");
-      clearError();
-    }
-  }, [error, clearError]);
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
   const submitHandler = async (type) => {
+    setDisable(true);
     try {
-      //todo add functionality to remember user
-      const data = await request(`/api/auth/${type}`, "POST", { ...form });
-      if (type === "login") auth.login(data.token, data.userId);
-      notify(data.message);
+      if (type === "login") dispatch(userLogin(form));
+      else if (type === "register") dispatch(userRegister(form));
+      setDisable(false);
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
+      setDisable(false);
     }
   };
 
@@ -37,11 +33,12 @@ const AuthPage = () => {
     console.log(target.value);
   };
 
-  return (
+  return isAuth ? (
+    <Redirect to="/app" />
+  ) : (
     <LoginForm
       changeHandler={changeHandler}
       submitHandler={submitHandler}
-      loading={loading}
       checkboxHandle={checkboxHandle}
       setIsChecked={setIsChecked}
     />

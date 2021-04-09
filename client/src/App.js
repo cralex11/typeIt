@@ -1,36 +1,29 @@
-import { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { useRoutes } from "./routes";
-import { notifyInit } from "./utils/utils";
-import { useAuth } from "./hooks/auth.hook";
-import { AuthContext } from "./context/AuthContext";
+import Routes from "./router";
+import { useEffect, useState } from "react";
+import { notify, notifyInit } from "./utils/utils";
+import { useDispatch } from "react-redux";
+import { checkToken } from "./store/actions/userAction";
+import Spinner from "./Components/Spinner";
 
 const App = () => {
-  const { logout, login, token, userId, loading } = useAuth();
-  const isAuthenticated = !!token;
+  const [loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     notifyInit();
-  }, []);
-  const routes = useRoutes(isAuthenticated);
 
-  if (loading) {
-    return (
-      <div className="w-screen h-screen bg-white flex justify-center items-center fixed top-0 left-0" />
-    );
-  }
-  return (
-    <AuthContext.Provider
-      value={{
-        logout,
-        login,
-        userId,
-        token,
-      }}
-    >
-      <Router>{routes}</Router>
-    </AuthContext.Provider>
-  );
+    dispatch(checkToken())
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        notify("Session has been expired!", "warning");
+      });
+  }, []);
+
+  return <>{loading ? <Spinner /> : <Routes />}</>;
 };
 
 export default App;

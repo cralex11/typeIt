@@ -19,3 +19,22 @@ export const notify = (msg, type = "info", title = null, config = {}) => {
       config
     );
 };
+
+//for routing
+export const intersection = (arrays) =>
+  arrays.reduce((a, b) => a.filter((c) => b.includes(c)));
+
+export function isArrayWithLength(arr) {
+  return Array.isArray(arr) && arr.length;
+}
+
+export function getAllowedRoutes(routes) {
+  const roles = /*JSON.parse(localStorage.getItem("roles"))*/ [2];
+  return routes.filter(({ permission }) => {
+    if (!permission) return true;
+    else if (!isArrayWithLength(permission)) return true;
+    else return intersection([permission, roles]).length;
+  });
+}
+
+export const errNotify = (e) => notify(e.response.data.message, "warning");
