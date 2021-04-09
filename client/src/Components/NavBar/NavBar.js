@@ -20,18 +20,18 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <div className="font-display relative bg-white">
+      <div className="font-display relative bg-white w-1 m-0 p-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="/">
+              <Link to="/">
                 <span className="sr-only">Workflow</span>
                 <img
                   className="h-8 w-auto sm:h-10"
                   src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                   alt=""
                 />
-              </a>
+              </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <button
@@ -127,14 +127,14 @@ const NavBar = (props) => {
               </div>
               <div className="mt-6">
                 <nav className="grid gap-y-8">
-                  {routes.map(({ path, title = null }) => {
+                  {routes.map(({ path, title, icon }) => {
                     if (title)
                       return (
                         <Link
                           key={path}
                           to={`${prefix}${path}`}
                           className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 text-base font-medium text-gray-900"
-                          icon={navIcons[title] || ""}
+                          icon={icon}
                         >
                           {title}
                         </Link>

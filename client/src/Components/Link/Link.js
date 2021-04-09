@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as PropTypes from "prop-types";
 
 const Link = (props) => {
@@ -6,17 +6,17 @@ const Link = (props) => {
   if (icon)
     return (
       <div>
-        <RouterLink to={to} {...rest}>
+        <NavLink to={to} {...rest}>
           {icon}
           <span className="ml-3 text-base font-medium text-gray-900">
             {children}
           </span>
-        </RouterLink>
+        </NavLink>
       </div>
     );
   return (
     <div style={{ cursor: "pointer" }} {...rest}>
-      <RouterLink to={to}>{children}</RouterLink>
+      <NavLink to={to}>{children}</NavLink>
     </div>
   );
 };

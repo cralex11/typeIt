@@ -10,13 +10,29 @@ import NotFound from "../Components/NotFound";
 
 function MapAllowedRoutes({ routes, basePath, isAddNotFound }) {
   const match = useRouteMatch(basePath);
+  console.log(routes.path);
   return (
     <Switch>
+      {/*{routes.map((route) => {*/}
+      {/*  const { path, component: Component, children, ...rest } = route;*/}
+      {/*  console.log(route);*/}
+      {/*  console.log(routes);*/}
+      {/*  return (*/}
+      {/*    <Route {...rest} key={path} path={`${match.path}${path}`}>*/}
+      {/*      <Component children={children} />*/}
+      {/*    </Route>*/}
+      {/*  );*/}
+      {/*})}*/}
+      {/*{isAddNotFound && (*/}
+      {/*  <Route>*/}
+      {/*    <NotFound />*/}
+      {/*  </Route>*/}
+      {/*)}*/}
       {routes.map((route) => {
         const { path, component: Component, children, ...rest } = route;
         return (
           <Route {...rest} key={path} path={`${match.path}${path}`}>
-            <Component>{!!children && children}</Component>
+            <Component children={children || []} />
           </Route>
         );
       })}

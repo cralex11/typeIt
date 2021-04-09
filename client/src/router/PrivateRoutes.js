@@ -17,13 +17,11 @@ function PrivateRoutes() {
   } else {
     return <Redirect to="/" />;
   }
-  console.log(allowedRoutes);
 
   return (
     <Fragment>
       <NavBar routes={allowedRoutes} prefix={match.path} />
-      <Dashboard routes={allowedRoutes} basePath="/app" isAddNotFound />
-      {/*<MapAllowedRoutes routes={allowedRoutes} basePath="/app" isAddNotFound />*/}
+      <MapAllowedRoutes routes={allowedRoutes} basePath="/app" isAddNotFound />
     </Fragment>
   );
 }
