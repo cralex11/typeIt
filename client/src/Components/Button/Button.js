@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
 const Button = (props) => {
-  const { title, children, ...rest } = props;
+  const { className, title, children, ...rest } = props;
   return (
     <>
-      <button type="button" {...rest}>
+      <button className={className} type="button" {...rest}>
         {title || children}
       </button>
     </>
@@ -13,5 +13,6 @@ const Button = (props) => {
 Button.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 export default Button;

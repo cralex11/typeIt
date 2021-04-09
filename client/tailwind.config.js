@@ -1,14 +1,14 @@
 module.exports = {
-    purge: [],
-    darkMode: false, // or 'media' or 'class'
-    theme: {
-        fontFamily: {
-            "display": ['Roboto'],
-        },
-        extend: {},
+  purge: [],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    fontFamily: {
+      display: ["Roboto"],
     },
-    variants: {
-        extend: {},
-    },
-    plugins: [],
-}
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};

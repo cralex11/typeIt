@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Link from "../Link";
 import Button from "../Button";
@@ -6,6 +6,25 @@ import { navIcons } from "../../router/config/links";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/actions/userAction";
+import { MenuIcon, SearchIcon } from "@heroicons/react/outline";
+
+let useClickOutside = (handler) => {
+  const domNode = useRef();
+
+  useEffect(() => {
+    let maybeHandler = (event) => {
+      if (!domNode.current.contains(event.target)) {
+        handler();
+      }
+    };
+    document.addEventListener("mousedown", maybeHandler);
+    return () => {
+      document.removeEventListener("mousedown", maybeHandler);
+    };
+  });
+
+  return domNode;
+};
 
 const NavBar = (props) => {
   const { routes, prefix } = props;
@@ -17,143 +36,55 @@ const NavBar = (props) => {
     dispatch(logout());
     // history.push("/");
   };
-
+  const domNode = useClickOutside(() => {
+    setHamburger(false);
+  });
   return (
-    <div>
-      <div className="font-display relative bg-white w-1 m-0 p-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-            <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link to="/">
-                <span className="sr-only">Workflow</span>
-                <img
-                  className="h-8 w-auto sm:h-10"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt=""
-                />
-              </Link>
-            </div>
-            <div className="-mr-2 -my-2 md:hidden">
-              <button
-                type="button"
-                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                onClick={handleHamburger}
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open menu</span>
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
-            </div>
-            {/*Navbar Links*/}
-            <nav className="hidden md:flex space-x-10">
-              {routes.map(({ path, title = null }) => {
-                if (title)
-                  return (
-                    <Link
-                      key={path}
-                      className="text-base font-medium text-gray-500 hover:text-gray-900 transition-colors duration-300"
-                      to={`${prefix}${path}`}
-                    >
-                      {title}
-                    </Link>
-                  );
-              })}
-            </nav>
-
-            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <Button
-                onClick={handleLogout}
-                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Logout
-              </Button>
-            </div>
-          </div>
-        </div>
-        {/*Mobile hamburger menu*/}
-        <div
-          className={`${
-            !hamburger ? "opacity-0 scale-95" : "opacity-100 scale-100"
-          } duration-200 ease-out absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden`}
+    <div className="nav-wrapper">
+      <div className="text-gray-50 w-screen bg-gray-800 flex justify-between p-4 shadow-lg">
+        <Button
+          onClick={handleHamburger}
+          className="hamburger text-gray-600 p-1 rounded-md transition-colors duration-200 outline-none hover:text-gray-100 hover:bg-gray-900  focus:outline-none"
         >
-          <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-            <div className="pt-5 pb-6 px-5">
-              <div className="flex items-center justify-between">
-                <div>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow"
-                  />
-                </div>
-                <div className="-mr-2">
-                  <button
-                    type="button"
-                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                    onClick={handleHamburger}
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <svg
-                      className="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  {routes.map(({ path, title, icon }) => {
-                    if (title)
-                      return (
-                        <Link
-                          key={path}
-                          to={`${prefix}${path}`}
-                          className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 text-base font-medium text-gray-900"
-                          icon={icon}
-                        >
-                          {title}
-                        </Link>
-                      );
-                  })}
-                </nav>
-              </div>
-            </div>
-            <div className="py-6 px-5 space-y-6">
-              <div>
-                <Button
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          <MenuIcon className="hamburger h-6 w-6" />
+        </Button>
+        <h2 className="text-2xl font-light">typeIt</h2>
+        <Button className="text-gray-600 p-1 rounded-md transition-colors duration-200 outline-none hover:text-gray-100 hover:bg-gray-900  focus:outline-none">
+          <SearchIcon className="h-6 w-6" />
+        </Button>
+      </div>
+      <div
+        ref={domNode}
+        className={` top-0 my-2 rounded-md
+        transform fixed w-3/5 h-screen
+        bg-gray-800 text-gray-100
+        flex flex-col items-center
+        text-lg shadow-2xl
+        transition-all duration-200 
+        ${
+          !hamburger
+            ? " opacity-0 -translate-x-full "
+            : " opacity-1 -translate-x-2"
+        }`}
+      >
+        <div className="links mt-12 w-11/12">
+          {routes.map(({ path, title = null }) => {
+            if (title)
+              return (
+                <Link
+                  key={path}
+                  className="
+                  text-lg font-normal mb-3 p-2  text-gray-50
+                  w-full text-center
+                  rounded-md
+                  hover:text-gray-900 hover:shadow-lg hover:bg-yellow-50
+                   transition-colors duration-200"
+                  to={`${prefix}${path}`}
                 >
-                  Logout
-                </Button>
-              </div>
-            </div>
-          </div>
+                  {title}
+                </Link>
+              );
+          })}
         </div>
       </div>
     </div>

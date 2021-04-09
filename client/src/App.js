@@ -23,7 +23,11 @@ const App = () => {
       });
   }, []);
 
-  return <>{loading ? <Spinner /> : <Routes />}</>;
+  return (
+    <div className="app bg-gray-700 text-gray-100">
+      {loading ? <Spinner /> : <Routes />}
+    </div>
+  );
 };
 
 export default App;

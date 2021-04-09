@@ -1,0 +1,48 @@
+
+.chat {
+
+  &-row {
+    display: flex;
+    padding: 1.2rem 1rem;
+    justify-content: space-between;
+
+    .img-wrapper {
+      flex: 2;
+
+      img {
+        width: 5.4rem;
+      }
+    }
+
+    .row-text {
+      flex: 7
+    }
+
+    .name {
+      margin-bottom: .1rem;
+    }
+
+    .message-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-height: 18px; /* fallback */
+      max-height: 40px; /* fallback */
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+
+
+    .message-info {
+      flex: 1;
+      text-align: right;
+    }
+
+    .count-messages {
+      background: #00bc49;
+    }
+
+
+  }
+
+}
